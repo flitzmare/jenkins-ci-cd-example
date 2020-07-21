@@ -1,4 +1,4 @@
-package jenkins_ci_cd_example
+package main
 
 import (
 	"fmt"
