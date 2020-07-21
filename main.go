@@ -8,6 +8,7 @@ import (
 func main(){
 	fmt.Println(Print())
 	fmt.Println(Print2())
+	fmt.Println("Updated!!")
 
 	e := echo.New()
 	e.GET("/", func(context echo.Context) error {
