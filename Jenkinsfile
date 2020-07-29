@@ -42,7 +42,7 @@ pipeline {
     stage('Running docker container') {
         steps{
             // sh "docker run --rm -itd --name run-hello-world $registry:$BUILD_NUMBER"
-            withEnv(["STAGING_HELLO_WORLD_API_VERSION=$BUILD_NUMBER"]) {
+            withEnv(["HELLO_WORLD_API_VERSION=$BUILD_NUMBER"]) {
                 sh "docker-compose -f /Users/riksasuviana/docker-compose.yml up -d"
             }
         }
