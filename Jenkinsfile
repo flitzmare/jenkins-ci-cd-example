@@ -7,12 +7,21 @@ pipeline {
   agent any
   stages {
     stage('Cloning Git') {
+        when {
+          branch 'master'
+        }
       steps {
                   sh "echo Branch: ${env.BRANCH_NAME}"
-                  sh "echo Job: ${env.JOB_NAME}"
+                                    sh "BRANCH MASTER"
         git branch: 'master', credentialsId: 'cc63d301-5150-4b74-bf60-dd572bba744b', url: 'https://github.com/flitzmare/jenkins-ci-cd-example.git'
+      }
+        when {
+          branch 'staging'
+        }
+      steps {
                   sh "echo Branch: ${env.BRANCH_NAME}"
-                  sh "echo Job: ${env.JOB_NAME}"
+                  sh "BRANCH STAGING"
+        git branch: 'staging', credentialsId: 'cc63d301-5150-4b74-bf60-dd572bba744b', url: 'https://github.com/flitzmare/jenkins-ci-cd-example.git'
       }
     }
     stage('Test') {
