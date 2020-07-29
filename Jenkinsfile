@@ -15,14 +15,6 @@ pipeline {
                                     sh "BRANCH MASTER"
         git branch: 'master', credentialsId: 'cc63d301-5150-4b74-bf60-dd572bba744b', url: 'https://github.com/flitzmare/jenkins-ci-cd-example.git'
       }
-        when {
-          branch 'staging'
-        }
-      steps {
-                  sh "echo Branch: ${env.BRANCH_NAME}"
-                  sh "BRANCH STAGING"
-        git branch: 'staging', credentialsId: 'cc63d301-5150-4b74-bf60-dd572bba744b', url: 'https://github.com/flitzmare/jenkins-ci-cd-example.git'
-      }
     }
     stage('Test') {
         steps {
