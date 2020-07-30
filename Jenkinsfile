@@ -2,6 +2,9 @@ pipeline {
   environment {
     registry = "riksasuviana/hello-world-api"
     registryCredential = 'a7ca3b0f-ae79-4834-a148-cfc1c82e16aa'
+    majorVersion = '0'
+    minorVersion = '1'
+
 //     dockerImage = ''
   }
   agent any
@@ -50,12 +53,14 @@ pipeline {
             // sh "docker run --rm -itd --name run-hello-world $registry:$BUILD_NUMBER"
             script {
                 if (env.BRANCH_NAME == 'master') {
-                    withEnv(["HELLO_WORLD_API_VERSION=$BUILD_NUMBER"]) {
-                        sh "docker-compose -f /Users/riksasuviana/docker-compose.yml up -d"
+                    withEnv(["HELLO_WORLD_API_VERSION=$majorVersion.$minorVersion.$BUILD_NUMBER"]) {
+                        sh "echo VERSION: $HELLO_WORLD_API_VERSION"
+                        sh "docker-compose -f $DOCKER_COMPOSE_LOCATION up -d"
                     }
                 } else if (env.BRANCH_NAME == 'staging'){
-                    withEnv(["STAGING_HELLO_WORLD_API_VERSION=staging-$BUILD_NUMBER"]) {
-                        sh "docker-compose -f /Users/riksasuviana/docker-compose-staging.yml up -d"
+                    withEnv(["STAGING_HELLO_WORLD_API_VERSION=staging-$majorVersion.$minorVersion.$BUILD_NUMBER"]) {
+                        sh "echo STAGING-VERSION: $STAGING_HELLO_WORLD_API_VERSION"
+                        sh "docker-compose -f $DOCKER_COMPOSE_STAGING_LOCATION up -d"
                     }
                 }
             }
