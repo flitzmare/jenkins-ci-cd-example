@@ -22,16 +22,11 @@ pipeline {
       steps{
         script {
                 if (env.BRANCH_NAME == 'master') {
-//                     sh "docker image build -t $registry:$majorVersion.$minorVersion.$BUILD_NUMBER ."
                     dockerImage = docker.build registry + ":$majorVersion.$minorVersion.$BUILD_NUMBER"
                 } else if (env.BRANCH_NAME == 'staging'){
-//                     sh "docker image build -t $registry:staging-$majorVersion.$minorVersion.$BUILD_NUMBER ."
                     dockerImage = docker.build registry + ":staging-$majorVersion.$minorVersion.$BUILD_NUMBER"
                 }
         }
-//         script {
-//           dockerImage = docker.build registry + ":$BUILD_NUMBER"
-//         }
       }
     }
     stage('Deploy Image') {
@@ -43,14 +38,8 @@ pipeline {
         }
       }
     }
-//     stage('Remove Unused docker image') {
-//       steps{
-//         sh "docker rmi $registry:$BUILD_NUMBER"
-//       }
-//     }
     stage('Running docker container') {
         steps{
-            // sh "docker run --rm -itd --name run-hello-world $registry:$BUILD_NUMBER"
             script {
                 if (env.BRANCH_NAME == 'master') {
                     withEnv(["HELLO_WORLD_API_VERSION=$majorVersion.$minorVersion.$BUILD_NUMBER"]) {
