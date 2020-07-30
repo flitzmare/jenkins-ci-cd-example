@@ -24,9 +24,9 @@ pipeline {
       steps{
         script {
                 if (env.BRANCH_NAME == 'master') {
-                    sh "docker image build -t $registry:$BUILD_NUMBER ."
+                    sh "docker image build -t $registry:$majorVersion.$minorVersion.$BUILD_NUMBER ."
                 } else if (env.BRANCH_NAME == 'staging'){
-                    sh "docker image build -t $registry:staging-$BUILD_NUMBER ."
+                    sh "docker image build -t $registry:staging-$majorVersion.$minorVersion.$BUILD_NUMBER ."
                 }
         }
 //         script {
