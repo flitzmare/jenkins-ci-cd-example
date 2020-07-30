@@ -60,7 +60,7 @@ pipeline {
                 } else if (env.BRANCH_NAME == 'staging'){
                     withEnv(["STAGING_HELLO_WORLD_API_VERSION=staging-$majorVersion.$minorVersion.$BUILD_NUMBER"]) {
                         sh "echo STAGING-VERSION: $STAGING_HELLO_WORLD_API_VERSION"
-                        sh "docker-compose -f $DDOCKER_COMPOSE_STAGING_LOCATION up -d"
+                        sh "docker-compose -f $DOCKER_COMPOSE_STAGING_LOCATION up -d"
                     }
                 }
             }
