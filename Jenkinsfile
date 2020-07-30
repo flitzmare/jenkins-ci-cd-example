@@ -4,8 +4,7 @@ pipeline {
     registryCredential = 'a7ca3b0f-ae79-4834-a148-cfc1c82e16aa'
     majorVersion = '0'
     minorVersion = '1'
-
-//     dockerImage = ''
+    dockerImage = ''
   }
   agent any
   stages {
@@ -16,7 +15,6 @@ pipeline {
     }
     stage('Test') {
         steps {
-            sh "ls"
             sh 'go test ./...'
         }
     }
@@ -24,9 +22,11 @@ pipeline {
       steps{
         script {
                 if (env.BRANCH_NAME == 'master') {
-                    sh "docker image build -t $registry:$majorVersion.$minorVersion.$BUILD_NUMBER ."
+//                     sh "docker image build -t $registry:$majorVersion.$minorVersion.$BUILD_NUMBER ."
+                    dockerImage = docker.build registry + ":$majorVersion.$minorVersion.$BUILD_NUMBER"
                 } else if (env.BRANCH_NAME == 'staging'){
-                    sh "docker image build -t $registry:staging-$majorVersion.$minorVersion.$BUILD_NUMBER ."
+//                     sh "docker image build -t $registry:staging-$majorVersion.$minorVersion.$BUILD_NUMBER ."
+                    dockerImage = docker.build registry + ":staging-$majorVersion.$minorVersion.$BUILD_NUMBER"
                 }
         }
 //         script {
@@ -34,15 +34,15 @@ pipeline {
 //         }
       }
     }
-//     stage('Deploy Image') {
-//       steps{
-//         script {
-//           docker.withRegistry( '', registryCredential ) {
-//             dockerImage.push()
-//           }
-//         }
-//       }
-//     }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
 //     stage('Remove Unused docker image') {
 //       steps{
 //         sh "docker rmi $registry:$BUILD_NUMBER"
