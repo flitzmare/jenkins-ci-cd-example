@@ -1,7 +1,7 @@
 pipeline {
   environment {
     registry = "riksasuviana/hello-world-api"
-    registryCredential = $REGISTRY_CREDENTIAL
+    registryCredential = "$REGISTRY_CREDENTIAL"
     majorVersion = '0'
     minorVersion = '1'
     dockerImage = ''
@@ -10,7 +10,7 @@ pipeline {
   stages {
     stage('Cloning Git') {
       steps {
-        git branch: "${env.BRANCH_NAME}", credentialsId: $GIT_CREDENTIAL, url: 'https://github.com/flitzmare/jenkins-ci-cd-example.git'
+        git branch: "${env.BRANCH_NAME}", credentialsId: "$GIT_CREDENTIAL", url: 'https://github.com/flitzmare/jenkins-ci-cd-example.git'
       }
     }
     stage('Test') {
@@ -22,9 +22,9 @@ pipeline {
       steps{
         script {
                 if (env.BRANCH_NAME == 'master') {
-                    dockerImage = docker.build registry + ":$majorVersion.$minorVersion.$BUILD_NUMBER"+" -e VERSION="+$majorVersion.$minorVersion.$BUILD_NUMBER
+                    dockerImage = docker.build registry + ":$majorVersion.$minorVersion.$BUILD_NUMBER"+" -e VERSION="+"$majorVersion.$minorVersion.$BUILD_NUMBER"
                 } else if (env.BRANCH_NAME == 'staging'){
-                    dockerImage = docker.build registry + ":staging-$majorVersion.$minorVersion.$BUILD_NUMBER"+" -e VERSION=staging-"+$majorVersion.$minorVersion.$BUILD_NUMBER
+                    dockerImage = docker.build registry + ":staging-$majorVersion.$minorVersion.$BUILD_NUMBER"+" -e VERSION=staging-"+"$majorVersion.$minorVersion.$BUILD_NUMBER"
                 }
         }
       }
