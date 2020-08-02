@@ -1,7 +1,7 @@
 pipeline {
   environment {
     registry = "riksasuviana/hello-world-api"
-    registryCredential = $REGISTRY_CREDENTIAL
+    registryCredential = "$REGISTRY_CREDENTIAL"
     majorVersion = '0'
     minorVersion = '1'
     dockerImage = ''
@@ -10,7 +10,7 @@ pipeline {
   stages {
     stage('Cloning Git') {
       steps {
-        git branch: "${env.BRANCH_NAME}", credentialsId: $GIT_CREDENTIAL, url: 'https://github.com/flitzmare/jenkins-ci-cd-example.git'
+        git branch: "${env.BRANCH_NAME}", credentialsId: "$GIT_CREDENTIAL", url: 'https://github.com/flitzmare/jenkins-ci-cd-example.git'
       }
     }
     stage('Test') {
