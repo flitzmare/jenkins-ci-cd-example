@@ -21,7 +21,7 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-            docker.withRegistry(registry, registryCredential) {
+//             docker.withRegistry(registry, registryCredential) {
                 if (env.BRANCH_NAME == 'master') {
                 dockerImage = docker.build(registry + ":$majorVersion.$minorVersion.$BUILD_NUMBER", " --build-arg VERSION="+"$majorVersion.$minorVersion.$BUILD_NUMBER")
 //                     dockerImage = docker.build registry + ":$majorVersion.$minorVersion.$BUILD_NUMBER"+" --build-arg VERSION="+"$majorVersion.$minorVersion.$BUILD_NUMBER"
@@ -29,7 +29,7 @@ pipeline {
                 dockerImage = docker.build(registry + ":$majorVersion.$minorVersion.$BUILD_NUMBER", " --build-arg VERSION="+"$majorVersion.$minorVersion.$BUILD_NUMBER")
 //                     dockerImage = docker.build registry + ":staging-$majorVersion.$minorVersion.$BUILD_NUMBER"+" --build-arg VERSION=staging-"+"$majorVersion.$minorVersion.$BUILD_NUMBER"
                 }
-             }
+//              }
         }
       }
     }
